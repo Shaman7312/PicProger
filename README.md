@@ -26,7 +26,7 @@ Only works now with PIC16F886 and a computer SW is crap (only works now if com i
 
 
 # Commands for Pic chip
-Programming specification http://ww1.microchip.com/downloads/en/DeviceDoc/41287D.pdf
+[Programming specification](http://ww1.microchip.com/downloads/en/DeviceDoc/41287D.pdf)
 
 xxxx0000 + 0,(data 14),0        - Load configuration
 
