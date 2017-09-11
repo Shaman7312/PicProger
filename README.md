@@ -11,8 +11,8 @@ Only works now with PIC16F886 and a computer SW is crap (only works now if com i
 53  - Execute stored command and send stored data sequentially.
 93  - Execute stored command, read 2 Bytes of data from PIC and send them to a computer immediately.
 140 - Send stored data to a PIC.
-75  - Enable 5V power for PIC
-34  - Disable 5V power for PIC
+75  - Enable 5V power for PIC.
+34  - Disable 5V power for PIC.
 
 
 # Commands for Pic chip
