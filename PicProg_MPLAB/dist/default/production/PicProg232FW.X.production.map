@@ -1,0 +1,124 @@
+MPLINK 5.08, LINKER
+Linker Map File - Created Mon Sep 11 13:07:16 2017
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x0002a4
+                   .cinit    romdata   0x000152    program   0x000004
+.config_2007_BUILD/DEFAULT/PRODUCTION/PICPROG       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000153      
+                            0x002007    0x002007      
+            341 out of 1094 program addresses used, program memory utilization is 31%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+              Delay_100us   0x00011f    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+               Delay_10ms   0x00012f    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+               Delay_10us   0x00013a    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+               Delay_50us   0x00012a    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+              Delay_800ms   0x000145    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                Delay_8us   0x00013f    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+               Delay_95us   0x000124    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+           Disable5VPower   0x000055    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+          DisableProgMode   0x00004c    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+            Enable5VPower   0x000051    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+           EnableProgMode   0x000040    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+ExeCommandandRead2BData_com   0x000084    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+ExeCommandandSend2BData_com   0x00007b    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+               NextBitCom   0x0000c0    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             NextBitSendH   0x0000df    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             NextBitSendL   0x0000d4    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                 ReadData   0x00008f    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                    ReadH   0x0000a5    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                    ReadL   0x00009a    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+        Recieve2BData_com   0x000068    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+       Recieve2BData_com2   0x00006e    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+               RecieveBit   0x000119    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+           RecieveByte232   0x000107    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+       RecieveCommand_com   0x000059    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+RecieveExecuteCommand_com   0x000060    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+           Send2BData_com   0x000075    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+              SendCommand   0x0000ba    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                 SendData   0x0000ca    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                    Start   0x00000c    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+           TransmitBit232   0x000101    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+          TransmitByte232   0x0000ea    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_0102   0x000102    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_011A   0x00011a    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_0122   0x000122    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_0127   0x000127    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_012D   0x00012d    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_0134   0x000134    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_0136   0x000136    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_013D   0x00013d    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_0142   0x000142    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_014C   0x00014c    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_014E   0x00014e    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_0150   0x000150    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                 reprebit   0x00010f    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+              reptrbit232   0x0000f6    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                    wait1   0x000116    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                    Start   0x00000c    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+           EnableProgMode   0x000040    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+          DisableProgMode   0x00004c    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+            Enable5VPower   0x000051    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+           Disable5VPower   0x000055    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+       RecieveCommand_com   0x000059    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+RecieveExecuteCommand_com   0x000060    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+        Recieve2BData_com   0x000068    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+       Recieve2BData_com2   0x00006e    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+           Send2BData_com   0x000075    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+ExeCommandandSend2BData_com   0x00007b    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+ExeCommandandRead2BData_com   0x000084    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                 ReadData   0x00008f    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                    ReadL   0x00009a    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                    ReadH   0x0000a5    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+              SendCommand   0x0000ba    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+               NextBitCom   0x0000c0    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                 SendData   0x0000ca    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             NextBitSendL   0x0000d4    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             NextBitSendH   0x0000df    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+          TransmitByte232   0x0000ea    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+              reptrbit232   0x0000f6    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+           TransmitBit232   0x000101    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_0102   0x000102    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+           RecieveByte232   0x000107    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                 reprebit   0x00010f    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                    wait1   0x000116    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+               RecieveBit   0x000119    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_011A   0x00011a    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+              Delay_100us   0x00011f    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_0122   0x000122    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+               Delay_95us   0x000124    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_0127   0x000127    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+               Delay_50us   0x00012a    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_012D   0x00012d    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+               Delay_10ms   0x00012f    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_0134   0x000134    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_0136   0x000136    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+               Delay_10us   0x00013a    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_013D   0x00013d    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+                Delay_8us   0x00013f    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_0142   0x000142    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+              Delay_800ms   0x000145    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_014C   0x00014c    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_014E   0x00014e    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+             _.org_0_0150   0x000150    program     static C:\Users\Shaman\MPLABXProjects\PicProg232FW.X\PicProg232FW.asm
+
+

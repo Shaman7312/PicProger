@@ -1,0 +1,9 @@
+c:\users\shaman\documents\visual studio 2015\Projects\PicProg232\PicProg232\bin\Debug\PicProg232.exe.config
+c:\users\shaman\documents\visual studio 2015\Projects\PicProg232\PicProg232\bin\Debug\PicProg232.exe
+c:\users\shaman\documents\visual studio 2015\Projects\PicProg232\PicProg232\bin\Debug\PicProg232.pdb
+c:\users\shaman\documents\visual studio 2015\Projects\PicProg232\PicProg232\obj\Debug\PicProg232.csprojResolveAssemblyReference.cache
+c:\users\shaman\documents\visual studio 2015\Projects\PicProg232\PicProg232\obj\Debug\PicProg232.Form1.resources
+c:\users\shaman\documents\visual studio 2015\Projects\PicProg232\PicProg232\obj\Debug\PicProg232.Properties.Resources.resources
+c:\users\shaman\documents\visual studio 2015\Projects\PicProg232\PicProg232\obj\Debug\PicProg232.csproj.GenerateResource.Cache
+c:\users\shaman\documents\visual studio 2015\Projects\PicProg232\PicProg232\obj\Debug\PicProg232.exe
+c:\users\shaman\documents\visual studio 2015\Projects\PicProg232\PicProg232\obj\Debug\PicProg232.pdb

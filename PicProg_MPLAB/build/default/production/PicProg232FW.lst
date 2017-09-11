@@ -1,0 +1,668 @@
+MPASM 5.68                  PICPROG232FW.ASM   9-11-2017  13:07:11         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001             LIST        p=16F84A
+2007   3FF1           00002             __CONFIG    03FF1H
+                      00003             
+  00000003            00004 STATUS      equ         03h
+  00000006            00005 PORTB       equ         06h     
+  00000006            00006 TRISB       equ         06h
+  00000005            00007 TRISA       equ         05h
+  00000005            00008 PORTA       equ         05h
+  00000002            00009 PCL         equ         02h
+  00000008            00010 EEDATA      equ         08h
+  00000009            00011 EEADR       equ         09h
+  00000008            00012 EECON1      equ         08h
+  00000009            00013 EECON2      equ         09h
+  0000000B            00014 INTCON      equ         0Bh
+  00000010            00015 Reg_1       equ         10h
+  00000011            00016 Reg_2       equ         11h
+  00000012            00017 Reg_3       equ         12h
+  00000013            00018 ReadByte232 equ         13h
+  00000014            00019 WriteByte232 equ        14h
+  00000015            00020 Counter232  equ         15h
+  00000016            00021 dataflags232 equ        16h;    0 - RS232 Recieved
+                      00022  
+  00000017            00023 ReadedByteL equ         17h
+  00000018            00024 ReadedByteH equ         18h
+  00000019            00025 SendByteL   equ         19h
+  0000001C            00026 SendByteH   equ         1Ch
+                      00027 
+                      00028 
+  0000001A            00029 Counter     equ         1Ah
+  0000001B            00030 CommandBuff equ         1Bh
+                      00031 
+  0000001E            00032 CommandMemory equ       1Eh
+  0000001D            00033 DataLMemory equ         1Dh
+  0000001F            00034 DataHMemory equ         1Fh
+                      00035  
+                      00036  
+                      00037  
+                      00038             org 0
+                      00039             
+0000   1683           00040             bsf         STATUS,5
+0001   0185           00041             clrf        TRISA
+0002   1486           00042             bsf         TRISB,1
+0003   1006           00043             bcf         TRISB,0
+0004   1286           00044             bcf         TRISB,5
+0005   1206           00045             bcf         TRISB,4
+0006   1106           00046             bcf         TRISB,2
+0007   1186           00047             bcf         TRISB,3
+0008   1283           00048             bcf         STATUS,5
+0009   1005           00049             bcf         PORTA,0
+000A   0186           00050             clrf        PORTB
+000B   0196           00051             clrf        dataflags232
+                      00052             
+                      00053             
+MPASM 5.68                  PICPROG232FW.ASM   9-11-2017  13:07:11         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000C   1085           00054 Start       bcf         PORTA,1
+000D   1505           00055             bsf         PORTA,2
+000E   2???           00056             call        RecieveByte232
+                      00057             ;call       Delay_95us
+000F   1C16           00058             btfss       dataflags232,0
+0010   2???           00059             goto        Start
+0011   1016           00060             bcf         dataflags232,0
+0012   1485           00061             bsf         PORTA,1
+0013   1105           00062             bcf         PORTA,2
+                      00063             
+0014   3055           00064             movlw       .85
+0015   0213           00065             subwf       ReadByte232,0
+0016   1903           00066             btfsc       STATUS,2
+0017   2???           00067             goto        EnableProgMode;Enable886
+                      00068             
+0018   30AA           00069             movlw       .170
+0019   0213           00070             subwf       ReadByte232,0
+001A   1903           00071             btfsc       STATUS,2
+001B   2???           00072             goto        DisableProgMode;Disable886
+                      00073             
+001C   3012           00074             movlw       .18
+001D   0213           00075             subwf       ReadByte232,0
+001E   1903           00076             btfsc       STATUS,2
+001F   2???           00077             goto        RecieveCommand_com
+                      00078             
+0020   3044           00079             movlw       .68
+0021   0213           00080             subwf       ReadByte232,0
+0022   1903           00081             btfsc       STATUS,2
+0023   2???           00082             goto        RecieveExecuteCommand_com
+                      00083             
+0024   300D           00084             movlw       .13
+0025   0213           00085             subwf       ReadByte232,0
+0026   1903           00086             btfsc       STATUS,2
+0027   2???           00087             goto        Recieve2BData_com
+                      00088             
+0028   3035           00089             movlw       .53
+0029   0213           00090             subwf       ReadByte232,0
+002A   1903           00091             btfsc       STATUS,2
+002B   2???           00092             goto        ExeCommandandSend2BData_com
+                      00093             
+002C   305D           00094             movlw       .93
+002D   0213           00095             subwf       ReadByte232,0
+002E   1903           00096             btfsc       STATUS,2
+002F   2???           00097             goto        ExeCommandandRead2BData_com
+                      00098             
+0030   308C           00099             movlw       .140
+0031   0213           00100             subwf       ReadByte232,0
+0032   1903           00101             btfsc       STATUS,2
+0033   2???           00102             goto        Send2BData_com
+                      00103             
+0034   304B           00104             movlw       .75
+0035   0213           00105             subwf       ReadByte232,0
+0036   1903           00106             btfsc       STATUS,2
+MPASM 5.68                  PICPROG232FW.ASM   9-11-2017  13:07:11         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0037   2???           00107             goto        Enable5VPower
+                      00108             
+0038   3022           00109             movlw       .34
+0039   0213           00110             subwf       ReadByte232,0
+003A   1903           00111             btfsc       STATUS,2
+003B   2???           00112             goto        Disable5VPower
+                      00113             
+003C   3033           00114             movlw       .51
+003D   0094           00115             movwf       WriteByte232
+003E   2???           00116             call        TransmitByte232
+003F   2???           00117             goto        Start
+                      00118         
+                      00119             
+0040                  00120 EnableProgMode;Enable886
+0040   1683           00121             bsf         STATUS,5
+0041   1206           00122             bcf         TRISB,4
+0042   1286           00123             bcf         TRISB,5
+0043   1283           00124             bcf         STATUS,5
+0044   1206           00125             bcf         PORTB,4
+0045   1286           00126             bcf         PORTB,5
+0046   1405           00127             bsf         PORTA,0     ;PWR On LED on
+0047   2???           00128             call        Delay_800ms
+0048   1506           00129             bsf         PORTB,2
+0049   2???           00130             call        Delay_8us
+004A   1586           00131             bsf         PORTB,3
+                      00132             ;bsf                STATUS,5
+                      00133             ;bsf                TRISB,4
+                      00134             ;bcf                STATUS,5
+004B   2???           00135             goto        Start
+                      00136             
+                      00137             
+004C                  00138 DisableProgMode;Disable886  
+004C   1283           00139             bcf         STATUS,5
+004D   1005           00140             bcf         PORTA,0     ;PWR On LED off
+004E   30F3           00141             movlw       b'11110011'
+004F   0586           00142             andwf       PORTB,1
+                      00143 
+0050   2???           00144             goto        Start
+                      00145             
+                      00146             
+0051                  00147 Enable5VPower
+0051   1283           00148             bcf         STATUS,5
+0052   1405           00149             bsf         PORTA,0
+0053   1586           00150             bsf         PORTB,3
+0054   2???           00151             goto        Start
+                      00152             
+                      00153             
+0055                  00154 Disable5VPower
+0055   1283           00155             bcf         STATUS,5
+0056   1005           00156             bcf         PORTA,0
+0057   1186           00157             bcf         PORTB,3
+0058   2???           00158             goto        Start
+                      00159             
+MPASM 5.68                  PICPROG232FW.ASM   9-11-2017  13:07:11         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0059                  00160 RecieveCommand_com
+0059   2???           00161             call        RecieveByte232
+005A   1C16           00162             btfss       dataflags232,0
+005B   2???           00163             goto        RecieveCommand_com
+005C   1016           00164             bcf         dataflags232,0
+005D   0813           00165             movf        ReadByte232,0
+005E   009E           00166             movwf       CommandMemory
+005F   2???           00167             goto        Start
+                      00168             
+                      00169             
+0060                  00170 RecieveExecuteCommand_com
+0060   2???           00171             call        RecieveByte232
+0061   1C16           00172             btfss       dataflags232,0
+0062   2???           00173             goto        RecieveExecuteCommand_com
+0063   1016           00174             bcf         dataflags232,0
+0064   0813           00175             movf        ReadByte232,0
+0065   009B           00176             movwf       CommandBuff
+0066   2???           00177             call        SendCommand
+0067   2???           00178             goto        Start
+                      00179             
+0068                  00180 Recieve2BData_com
+0068   2???           00181             call        RecieveByte232
+0069   1C16           00182             btfss       dataflags232,0
+006A   2???           00183             goto        Recieve2BData_com
+006B   1016           00184             bcf         dataflags232,0
+                      00185             
+006C   0813           00186             movf        ReadByte232,0
+006D   009D           00187             movwf       DataLMemory
+                      00188             
+                      00189             
+006E                  00190 Recieve2BData_com2
+                      00191             ;call       Delay_50us
+006E   2???           00192             call        RecieveByte232
+006F   1C16           00193             btfss       dataflags232,0
+0070   2???           00194             goto        Recieve2BData_com2
+0071   1016           00195             bcf         dataflags232,0
+                      00196             
+0072   0813           00197             movf        ReadByte232,0
+0073   009F           00198             movwf       DataHMemory
+0074   2???           00199             goto        Start
+                      00200             
+0075                  00201 Send2BData_com
+0075   081D           00202             movf        DataLMemory,0
+0076   0099           00203             movwf       SendByteL
+0077   081F           00204             movf        DataHMemory,0
+0078   009C           00205             movwf       SendByteH
+                      00206             
+0079   2???           00207             call        SendData
+007A   2???           00208             goto        Start
+                      00209             
+                      00210             
+007B                  00211 ExeCommandandSend2BData_com
+007B   081E           00212             movf        CommandMemory,0
+MPASM 5.68                  PICPROG232FW.ASM   9-11-2017  13:07:11         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+007C   009B           00213             movwf       CommandBuff
+007D   081D           00214             movf        DataLMemory,0
+007E   0099           00215             movwf       SendByteL
+007F   081F           00216             movf        DataHMemory,0
+0080   009C           00217             movwf       SendByteH
+0081   2???           00218             call        SendCommand
+0082   2???           00219             call        SendData
+                      00220             
+0083   2???           00221             goto        Start
+                      00222             
+                      00223             
+                      00224             
+                      00225             
+                      00226             
+0084                  00227 ExeCommandandRead2BData_com         
+0084   081E           00228             movf        CommandMemory,0
+0085   009B           00229             movwf       CommandBuff
+0086   2???           00230             call        SendCommand
+0087   2???           00231             call        ReadData
+                      00232             
+0088   0817           00233             movf        ReadedByteL,0
+0089   0094           00234             movwf       WriteByte232
+008A   2???           00235             call        TransmitByte232
+                      00236             ;call       Delay_100us
+008B   0818           00237             movf        ReadedByteH,0
+008C   0094           00238             movwf       WriteByte232
+008D   2???           00239             call        TransmitByte232
+                      00240             
+008E   2???           00241             goto        Start
+                      00242             
+                      00243             
+                      00244             
+                      00245             
+                      00246             
+                      00247             
+                      00248 ; ------------------------Read data from 886 --------------         
+008F   0197           00249 ReadData    clrf        ReadedByteL
+0090   0198           00250             clrf        ReadedByteH
+0091   3008           00251             movlw       .8
+0092   009A           00252             movwf       Counter
+0093   1683           00253             bsf         STATUS,5
+0094   1286           00254             bcf         TRISB,5
+0095   1606           00255             bsf         TRISB,4
+0096   1283           00256             bcf         STATUS,5
+0097   1686           00257             bsf         PORTB,5
+                      00258             ;;bcf               ReadedByteL,7
+0098   0000           00259             nop
+0099   1286           00260             bcf         PORTB,5
+                      00261             
+                      00262             
+009A   0C97           00263 ReadL       rrf         ReadedByteL,1
+009B   1397           00264             bcf         ReadedByteL,7
+009C   1686           00265             bsf         PORTB,5
+MPASM 5.68                  PICPROG232FW.ASM   9-11-2017  13:07:11         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+009D   0000           00266             nop
+009E   1A06           00267             btfsc       PORTB,4
+009F   1797           00268             bsf         ReadedByteL,7
+00A0   1286           00269             bcf         PORTB,5
+                      00270             
+                      00271             
+00A1   0B9A           00272             decfsz      Counter,1
+00A2   2???           00273             goto        ReadL
+00A3   3006           00274             movlw       .6
+00A4   009A           00275             movwf       Counter
+                      00276             
+00A5                  00277 ReadH       
+00A5   1398           00278             bcf         ReadedByteH,7
+00A6   1686           00279             bsf         PORTB,5
+00A7   0000           00280             nop
+00A8   1A06           00281             btfsc       PORTB,4
+00A9   1798           00282             bsf         ReadedByteH,7
+00AA   1286           00283             bcf         PORTB,5
+00AB   0C98           00284             rrf         ReadedByteH,1
+00AC   0B9A           00285             decfsz      Counter,1
+00AD   2???           00286             goto        ReadH
+00AE   1686           00287             bsf         PORTB,5
+00AF   0000           00288             nop
+00B0   1286           00289             bcf         PORTB,5
+00B1   0C98           00290             rrf         ReadedByteH,1
+00B2   1398           00291             bcf         ReadedByteH,7
+                      00292             ;rrf                ReadedByteH,1
+                      00293             ;bcf                ReadedByteH,7
+00B3   1206           00294             bcf         PORTB,4
+00B4   1286           00295             bcf         PORTB,5
+00B5   1683           00296             bsf         STATUS,5
+00B6   1286           00297             bcf         TRISB,5
+00B7   1206           00298             bcf         TRISB,4
+00B8   1283           00299             bcf         STATUS,5
+                      00300             
+00B9   0008           00301             return
+                      00302 ;------------------------------------------------------     
+                      00303             
+                      00304             
+                      00305             
+                      00306 ;------------------   Send command to 886   -----------     
+                      00307             
+00BA   3006           00308 SendCommand movlw       .6
+00BB   009A           00309             movwf       Counter
+00BC   1683           00310             bsf         STATUS,5
+00BD   1206           00311             bcf         TRISB,4
+00BE   1286           00312             bcf         TRISB,5
+00BF   1283           00313             bcf         STATUS,5
+00C0   1206           00314 NextBitCom  bcf         PORTB,4
+00C1   181B           00315             btfsc       CommandBuff,0
+00C2   1606           00316             bsf         PORTB,4
+00C3   1686           00317             bsf         PORTB,5
+00C4   0000           00318             nop
+MPASM 5.68                  PICPROG232FW.ASM   9-11-2017  13:07:11         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00C5   1286           00319             bcf         PORTB,5
+00C6   0C9B           00320             rrf         CommandBuff,1
+00C7   0B9A           00321             decfsz      Counter,1
+00C8   2???           00322             goto        NextBitCom
+00C9   0008           00323             return
+                      00324 ;-------------------------------------------------------            
+                      00325             
+                      00326 
+                      00327 ;-----------------    Send data to 886    ----------------          
+                      00328             
+00CA   3008           00329 SendData    movlw       .8
+00CB   009A           00330             movwf       Counter
+00CC   0D99           00331             rlf         SendByteL,1
+00CD   0D9C           00332             rlf         SendByteH,1
+00CE   1019           00333             bcf         SendByteL,0
+00CF   139C           00334             bcf         SendByteH,7
+00D0   1683           00335             bsf         STATUS,5
+00D1   1206           00336             bcf         TRISB,4
+00D2   1286           00337             bcf         TRISB,5
+00D3   1283           00338             bcf         STATUS,5
+00D4                  00339 NextBitSendL 
+00D4   1206           00340             bcf         PORTB,4
+00D5   1819           00341             btfsc       SendByteL,0
+00D6   1606           00342             bsf         PORTB,4
+00D7   1686           00343             bsf         PORTB,5
+00D8   0000           00344             nop
+00D9   1286           00345             bcf         PORTB,5
+00DA   0C99           00346             rrf         SendByteL,1
+00DB   0B9A           00347             decfsz      Counter,1
+00DC   2???           00348             goto        NextBitSendL
+                      00349             
+00DD   3008           00350             movlw       .8
+00DE   009A           00351             movwf       Counter
+00DF                  00352 NextBitSendH ;bsf       STATUS,5
+                      00353             ;bcf                TRISB,4
+                      00354             ;bcf                STATUS,5
+00DF   1206           00355             bcf         PORTB,4
+00E0   181C           00356             btfsc       SendByteH,0
+00E1   1606           00357             bsf         PORTB,4
+00E2   1686           00358             bsf         PORTB,5
+00E3   0000           00359             nop
+00E4   1286           00360             bcf         PORTB,5
+00E5   0C9C           00361             rrf         SendByteH,1
+00E6   0B9A           00362             decfsz      Counter,1
+00E7   2???           00363             goto        NextBitSendH
+00E8   2???           00364             call        Delay_100us
+00E9   0008           00365             return
+                      00366 ;---------------------------------------------------------
+                      00367 
+                      00368             
+                      00369             
+                      00370 
+                      00371             
+MPASM 5.68                  PICPROG232FW.ASM   9-11-2017  13:07:11         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00372             
+                      00373 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;        
+                      00374 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;        
+                      00375 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;        
+                      00376             
+                      00377             
+                      00378             
+                      00379             
+                      00380             
+                      00381             
+                      00382 ;--------------------    TRANSMIT BYTE 232    --------------        
+00EA   3008           00383 TransmitByte232 movlw   .8
+00EB   0095           00384             movwf       Counter232
+00EC   1283           00385             bcf         STATUS,5
+00ED   1406           00386             bsf         PORTB,0
+                      00387             
+00EE   1683           00388             bsf         STATUS,5
+00EF   1006           00389             bcf         TRISB,0
+00F0   1283           00390             bcf         STATUS,5
+00F1   1006           00391             bcf         PORTB,0
+                      00392             ;call       Delay_826us         ;baud rate 1200
+00F2   2???           00393             call        Delay_95us          ;baud rate 9600
+00F3   0000           00394             nop
+00F4   0000           00395             nop
+00F5   0000           00396             nop
+                      00397 
+00F6   2???           00398 reptrbit232 call        TransmitBit232
+00F7   0C94           00399             rrf         WriteByte232,1
+                      00400             ;call       Delay_826us         ;baud rate 1200
+00F8   2???           00401             call        Delay_95us          ;baud rate 9600
+00F9   0B95           00402             decfsz      Counter232,1
+00FA   2???           00403             goto        reptrbit232
+00FB   1683           00404             bsf         STATUS,5
+00FC   1406           00405             bsf         TRISB,0
+00FD   1283           00406             bcf         STATUS,5
+00FE   1406           00407             bsf         PORTB,0
+00FF   2???           00408             call        Delay_100us
+0100   0008           00409             return
+                      00410             
+0101   1814           00411 TransmitBit232 btfsc    WriteByte232,0
+0102   2???           00412             goto        $+3
+0103   1006           00413             bcf         PORTB,0
+0104   0008           00414             return
+0105   1406           00415             bsf         PORTB,0
+0106   0008           00416             return    
+                      00417 ;----------------------------------------------------------         
+                      00418 
+                      00419             
+                      00420 ;--------------------     RECIEVE BYTE  232   ----------------      
+0107                  00421 RecieveByte232 
+0107   1283           00422             bcf         STATUS,5
+0108   1886           00423             btfsc       PORTB,1
+0109   0008           00424             return
+MPASM 5.68                  PICPROG232FW.ASM   9-11-2017  13:07:11         PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+010A   1416           00425             bsf         dataflags232,0
+010B   0193           00426             clrf        ReadByte232
+010C   3008           00427             movlw       .8
+010D   0095           00428             movwf       Counter232
+                      00429             ;call       Delay_50us          ;baud rate 1200
+010E   2???           00430             call        Delay_10us          ;baud rate 9600
+                      00431             
+010F                  00432 reprebit    ;call       Delay_826us         ;baud rate 1200
+010F   2???           00433             call        Delay_95us          ;baud rate 9600
+0110   0000           00434             nop
+0111   0000           00435             nop
+0112   0C93           00436             rrf         ReadByte232,1
+0113   2???           00437             call        RecieveBit
+                      00438             
+0114   0B95           00439             decfsz      Counter232,1
+0115   2???           00440             goto        reprebit
+                      00441             
+0116   1C86           00442 wait1       btfss       PORTB,1
+0117   2???           00443             goto        wait1
+0118   0008           00444             return
+                      00445             
+                      00446             
+                      00447             
+0119   1886           00448 RecieveBit  btfsc       PORTB,1
+011A   2???           00449             goto        $+3
+011B   1393           00450             bcf         ReadByte232,7
+011C   0008           00451             return
+011D   1793           00452             bsf         ReadByte232,7
+011E   0008           00453             return
+                      00454     
+                      00455 ;----------------------------------------------------------
+                      00456             
+011F   3021           00457 Delay_100us movlw       .33
+0120   0090           00458             movwf       Reg_1
+0121   0B90           00459             decfsz      Reg_1,F
+0122   2???           00460             goto        $-1   
+0123   0008           00461             return
+                      00462             
+0124   301F           00463 Delay_95us  movlw       .31
+0125   0090           00464             movwf       Reg_1
+0126   0B90           00465             decfsz      Reg_1,F
+0127   2???           00466             goto        $-1
+0128   0000           00467             nop
+0129   0008           00468             return
+                      00469             
+                      00470             
+012A   3010           00471 Delay_50us  movlw       .16
+012B   0090           00472             movwf       Reg_1
+012C   0B90           00473             decfsz      Reg_1,F
+012D   2???           00474             goto        $-1
+012E   0008           00475             return
+                      00476             
+012F   30FB           00477 Delay_10ms  movlw       .251
+MPASM 5.68                  PICPROG232FW.ASM   9-11-2017  13:07:11         PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0130   0090           00478             movwf       Reg_1
+0131   300D           00479             movlw       .13
+0132   0091           00480             movwf       Reg_2
+0133   0B90           00481             decfsz      Reg_1,F
+0134   2???           00482             goto        $-1
+0135   0B91           00483             decfsz      Reg_2,F
+0136   2???           00484             goto        $-3
+0137   0000           00485             nop
+0138   0000           00486             nop
+0139   0008           00487             return
+                      00488             
+013A   3003           00489 Delay_10us  movlw       .3
+013B   0090           00490             movwf       Reg_1
+013C   0B90           00491             decfsz      Reg_1,F
+013D   2???           00492             goto        $-1
+013E   0008           00493             return
+                      00494             
+013F   3002           00495 Delay_8us   movlw       .2
+0140   0090           00496             movwf       Reg_1
+0141   0B90           00497             decfsz      Reg_1,F
+0142   2???           00498             goto        $-1
+0143   0000           00499             nop
+0144   0008           00500             return
+                      00501             
+0145   30F1           00502 Delay_800ms movlw       .241
+0146   0090           00503             movwf       Reg_1
+0147   300F           00504             movlw       .15
+0148   0091           00505             movwf       Reg_2
+0149   3005           00506             movlw       .5
+014A   0092           00507             movwf       Reg_3
+014B   0B90           00508             decfsz      Reg_1,F
+014C   2???           00509             goto        $-1
+014D   0B91           00510             decfsz      Reg_2,F
+014E   2???           00511             goto        $-3
+014F   0B92           00512             decfsz      Reg_3,F
+0150   2???           00513             goto        $-5
+0151   0008           00514             return
+                      00515             
+3FF1                  00516             end
+MPASM 5.68                  PICPROG232FW.ASM   9-11-2017  13:07:11         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+CommandBuff                       0000001B
+CommandMemory                     0000001E
+Counter                           0000001A
+Counter232                        00000015
+DataHMemory                       0000001F
+DataLMemory                       0000001D
+Delay_100us                       0000011F
+Delay_10ms                        0000012F
+Delay_10us                        0000013A
+Delay_50us                        0000012A
+Delay_800ms                       00000145
+Delay_8us                         0000013F
+Delay_95us                        00000124
+Disable5VPower                    00000055
+DisableProgMode                   0000004C
+EEADR                             00000009
+EECON1                            00000008
+EECON2                            00000009
+EEDATA                            00000008
+Enable5VPower                     00000051
+EnableProgMode                    00000040
+ExeCommandandRead2BData_com       00000084
+ExeCommandandSend2BData_com       0000007B
+INTCON                            0000000B
+NextBitCom                        000000C0
+NextBitSendH                      000000DF
+NextBitSendL                      000000D4
+PCL                               00000002
+PORTA                             00000005
+PORTB                             00000006
+ReadByte232                       00000013
+ReadData                          0000008F
+ReadH                             000000A5
+ReadL                             0000009A
+ReadedByteH                       00000018
+ReadedByteL                       00000017
+Recieve2BData_com                 00000068
+Recieve2BData_com2                0000006E
+RecieveBit                        00000119
+RecieveByte232                    00000107
+RecieveCommand_com                00000059
+RecieveExecuteCommand_com         00000060
+Reg_1                             00000010
+Reg_2                             00000011
+Reg_3                             00000012
+STATUS                            00000003
+Send2BData_com                    00000075
+SendByteH                         0000001C
+SendByteL                         00000019
+SendCommand                       000000BA
+SendData                          000000CA
+Start                             0000000C
+TRISA                             00000005
+MPASM 5.68                  PICPROG232FW.ASM   9-11-2017  13:07:11         PAGE 12
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TRISB                             00000006
+TransmitBit232                    00000101
+TransmitByte232                   000000EA
+WriteByte232                      00000014
+_.org_0_0102                      00000102
+_.org_0_011A                      0000011A
+_.org_0_0122                      00000122
+_.org_0_0127                      00000127
+_.org_0_012D                      0000012D
+_.org_0_0134                      00000134
+_.org_0_0136                      00000136
+_.org_0_013D                      0000013D
+_.org_0_0142                      00000142
+_.org_0_014C                      0000014C
+_.org_0_014E                      0000014E
+_.org_0_0150                      00000150
+__16F84A                          00000001
+dataflags232                      00000016
+reprebit                          0000010F
+reptrbit232                       000000F6
+wait1                             00000116
+
+Errors   :     0
+Warnings :     0 reported,     0 suppressed
+Messages :     0 reported,     0 suppressed
+
+
