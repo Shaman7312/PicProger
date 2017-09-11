@@ -30,3 +30,4 @@ xxx01010                        - End programming
 xxxx1001                        - Bulk erase program memory
 xxxx1011                        - Bulk erase data memory
 xxx10001                        - Row erase program memory
+
