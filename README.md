@@ -4,6 +4,7 @@ Only works now with PIC16F886 and a computer SW is crap (only works now if com i
 
 # Commands for programmer
 85  - Enable programming mode.
+
 170 - Disable programming mode.
 18  - Receive command for PIC and store it.
 68  - Receive command for PIC and execute immediately.
