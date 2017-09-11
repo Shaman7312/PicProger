@@ -7,3 +7,12 @@ c:\users\shaman\documents\visual studio 2015\Projects\PicProg232\PicProg232\obj\
 c:\users\shaman\documents\visual studio 2015\Projects\PicProg232\PicProg232\obj\Debug\PicProg232.csproj.GenerateResource.Cache
 c:\users\shaman\documents\visual studio 2015\Projects\PicProg232\PicProg232\obj\Debug\PicProg232.exe
 c:\users\shaman\documents\visual studio 2015\Projects\PicProg232\PicProg232\obj\Debug\PicProg232.pdb
+D:\PicProg\.git\PicProg_VS\PicProg232\bin\Debug\PicProg232.exe.config
+D:\PicProg\.git\PicProg_VS\PicProg232\bin\Debug\PicProg232.exe
+D:\PicProg\.git\PicProg_VS\PicProg232\bin\Debug\PicProg232.pdb
+D:\PicProg\.git\PicProg_VS\PicProg232\obj\Debug\PicProg232.csprojResolveAssemblyReference.cache
+D:\PicProg\.git\PicProg_VS\PicProg232\obj\Debug\PicProg232.Form1.resources
+D:\PicProg\.git\PicProg_VS\PicProg232\obj\Debug\PicProg232.Properties.Resources.resources
+D:\PicProg\.git\PicProg_VS\PicProg232\obj\Debug\PicProg232.csproj.GenerateResource.Cache
+D:\PicProg\.git\PicProg_VS\PicProg232\obj\Debug\PicProg232.exe
+D:\PicProg\.git\PicProg_VS\PicProg232\obj\Debug\PicProg232.pdb
